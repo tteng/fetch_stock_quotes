@@ -1,0 +1,26 @@
+{
+  "name" : "grab_stock_quotes",
+  "version" : "0.0.1",
+  "description" : "grab stock quotes using yahoo finance api.",
+  "main" : "./index.js",
+  "dependencies" : {
+    "sprintf":        ">=0.1.1",
+    "request":        ">=2.12.0",
+    "mysql":          ">=2.0.0-alpha5",
+    "generic-pool":   ">=2.0.2",
+    "memcached":      ">=0.1.5"
+  },
+  "devDependencies" : {
+  },
+  "scripts" : {
+    "test" : "expresso"
+  },
+  "repository" : {
+  },
+  "author" : {
+    "name" : "tengxianggong",
+    "email" : "shreadline@gmail.com"
+  },
+  "license" : "GNU",
+  "engine" : ["node >=0.8.0"]
+}
