@@ -25,12 +25,12 @@ fetch_tags_web_score = (response, query) ->
       console.log "[mysql tags_total_count] #{total_count} #{typeof total_count}"
       [step, completed_count, tag_count_per_request] = [0, 0, 1]
       loop 
-        get_tag_sql = "select title from tags order by id limit #{tag_count_per_request} offset #{step * tag_count_per_request}"
+        get_tag_sql = "select name from tags order by id limit #{tag_count_per_request} offset #{step * tag_count_per_request}"
         mysql.query get_tag_sql, null, (err, results) ->
           if err
             console.log "[mysql error] Query tag failed for #{err}"
           else
-            http.get("http://localhost:8888/single_tag_rank?tag=#{results[0].title}",  (res) ->
+            http.get("http://localhost:8888/single_tag_rank?tag=#{results[0].name}",  (res) ->
               completed_count++
               logger.info "[completed_count]: #{completed_count}"
               update_all_tags_weibo_score() if completed_count >= total_count
@@ -71,7 +71,7 @@ single_tag_rank = (response, query) ->
   dest_url = sprintf options.realtime_uri, tag, prefix=(if date.getHours() < 10 then yesterday else today), today
   #logger.info "--- going to query #{dest_url}"
 
-  update_sql = "update tags set weibo_rank=?, updated_at=now() where title=?"
+  update_sql = "update tags set weibo_rank=?, updated_at=now() where name=?"
 
   request.get dest_url, (error, res, body) ->
     if error 
