@@ -96,7 +96,7 @@ fetch_stocks = (response, query) ->
                                console.log "[server error] batch fetch quotes failed caused by #{e}"
       
         step++
-        break if step * fetch_quotes_per_request > total_count
+        break if step * fetch_quotes_per_request >= total_count
     
       response.end()
 

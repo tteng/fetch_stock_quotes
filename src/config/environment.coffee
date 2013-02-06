@@ -38,5 +38,8 @@ settings =
   # 股票价格过期时间,毫秒
   STOCK_PRICE_EXPIRES: 600000  #10分钟
 
+  # 微博热门tag数，最热的tag将得到这个数字对应的分数，最低的是1分
+  WEIBO_HOT_TAGS_COUNT: 100
+
 module.exports = settings
 #console.dir settings

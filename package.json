@@ -8,7 +8,9 @@
     "request":        ">=2.12.0",
     "mysql":          ">=2.0.0-alpha5",
     "generic-pool":   ">=2.0.2",
-    "memcached":      ">=0.1.5"
+    "memcached":      ">=0.1.5",
+    "jsdom":          ">=0.3.4",
+    "date-utils":     "1.2.12"
   },
   "devDependencies" : {
   },
