@@ -37,7 +37,7 @@ fetch_tags_web_score = (response, query) ->
             ).on 'error', (e) ->
                             console.log "[server error] batch fetch sinle tag rank failed caused by #{e}"
                             completed_count++
-                            update_all_tags_weibo_score() if completed_count > total_count
+                            update_all_tags_weibo_score() if completed_count >= total_count
       
         step++
         break if step * tag_count_per_request >= total_count
