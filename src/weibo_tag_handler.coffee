@@ -13,7 +13,7 @@ jsdom.defaultDocumentFeatures =
   FetchExternalResources: false,
   ProcessExternalResources: false
 
-fetch_tags_web_score = (response, query) ->
+fetch_tags_weibo_score = (response, query) ->
   get_total_count_sql = "select count(*) as count from tags"
   total_count = 0
   mysql.query get_total_count_sql, null, (err, results) ->
@@ -30,7 +30,7 @@ fetch_tags_web_score = (response, query) ->
           if err
             console.log "[mysql error] Query tag failed for #{err}"
           else
-            http.get("http://localhost:8888/single_tag_rank?tag=#{results[0].name}",  (res) ->
+            http.get("http://localhost:8888/single_tag_weibo_rank?tag=#{results[0].name}",  (res) ->
               completed_count++
               logger.info "[completed_count]: #{completed_count}"
               update_all_tags_weibo_score() if completed_count >= total_count
@@ -59,17 +59,17 @@ update_all_tags_weibo_score = ->
     else
       console.log "tags weibo score updated"
 
-single_tag_rank = (response, query) ->
+single_tag_weibo_rank = (response, query) ->
   tag = query.split('=')[1]
   date = new Date()
   today = date.toFormat "YYYY-MM-DD"
-  #logger.info "today: #{today}"
+  logger.info "today: #{today}"
   
   yesterday = Date.yesterday().toFormat "YYYY-MM-DD"
-  #logger.info "yesterday: #{yesterday}"
+  logger.info "yesterday: #{yesterday}"
 
   dest_url = sprintf options.realtime_uri, tag, prefix=(if date.getHours() < 10 then yesterday else today), today
-  #logger.info "--- going to query #{dest_url}"
+  logger.info "--- going to query #{dest_url}"
 
   update_sql = "update tags set weibo_rank=?, updated_at=now() where name=?"
 
@@ -81,7 +81,7 @@ single_tag_rank = (response, query) ->
                                 if error 
                                   logger.error "[tag:fame:error] can't get #{tag} total count" 
                                 else
-                                  reg_pat =  /totalNum.*\s+((\d{1,},?)+\s)/m
+                                  reg_pat =  /totalNum.*\s((\d{1,},?)+\s)/m
                                   match = reg_pat.exec body
                                   unless match == null 
                                     score = match[1].replace(/,/,'')
@@ -89,9 +89,11 @@ single_tag_rank = (response, query) ->
                                     mysql.query update_sql, [score, decodeURI(tag)], (err, results) ->
                                       if err
                                         consloe.log "[mysql error] update weibo rank failed for #{err}"
+                                  else
+                                    logger.info "tag #{tag} total num not found"
                                 window.close()
       
   response.end()
 
-exports.single_tag_rank = single_tag_rank
-exports.fetch_tags_web_score = fetch_tags_web_score
+exports.single_tag_weibo_rank = single_tag_weibo_rank
+exports.fetch_tags_weibo_score = fetch_tags_weibo_score

@@ -41,5 +41,8 @@ settings =
   # 微博热门tag数，最热的tag将得到这个数字对应的分数，最低的是1分
   WEIBO_HOT_TAGS_COUNT: 100
 
+  # 用来找代理服务器的代理跳板
+  PROXY_START_POINT: "http://200.146.34.44:3128"
+
 module.exports = settings
 #console.dir settings
