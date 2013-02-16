@@ -18,7 +18,7 @@ start = (response, query) ->
   response.write 'welcome to index.'
   response.end()
 
-quotes = (response, query) ->
+fetch_single_quote = (response, query) ->
   query = query.split('=')[1]
   console.log "Request handler quotes was called, will get quotes for #{query}"
   fields = [
@@ -71,7 +71,7 @@ quotes = (response, query) ->
 
     response.end()
 
-fetch_stocks = (response, query) ->
+fetch_all_quotes = (response, query) ->
   get_total_count_sql = "select count(*) as count from stocks"
   total_count = 0
   mysql.query get_total_count_sql, null, (err, results) ->
@@ -91,7 +91,7 @@ fetch_stocks = (response, query) ->
           else
             for result in results
               stock_tickers.push result.ticker
-            http.get("http://localhost:8888/quotes?stock=#{stock_tickers.join(',')}",  (res) ->)
+            http.get("http://localhost:8888/fetch_single_quote?stock=#{stock_tickers.join(',')}",  (res) ->)
                 .on 'error', (e) ->
                                console.log "[server error] batch fetch quotes failed caused by #{e}"
       
@@ -101,6 +101,6 @@ fetch_stocks = (response, query) ->
       response.end()
 
 exports.start  = start
-exports.quotes = quotes
-exports.fetch_stocks = fetch_stocks
+exports.fetch_all_quotes = fetch_all_quotes
+exports.fetch_single_quote = fetch_single_quote
 
