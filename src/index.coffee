@@ -11,6 +11,7 @@ handle["/fetch_all_quotes"]       =     quotes_handler.fetch_all_quotes
 handle["/fetch_single_quote"]     =     quotes_handler.fetch_single_quote
 handle["/tags_weibo_score"]       =     weibo_tag_handler.fetch_tags_weibo_score
 handle["/single_tag_weibo_rank"]  =     weibo_tag_handler.single_tag_weibo_rank
+handle["/calc_top_hundred_weibo_score"] = weibo_tag_handler.calc_top_hundred_score
 handle["/verify_proxies"]         =     proxy_handler.verify_proxies
 handle["/test_proxy"]             =     proxy_handler.test_proxy
 

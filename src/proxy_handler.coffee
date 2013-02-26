@@ -1,5 +1,5 @@
 http = require 'http'
-http.globalAgent.maxSockets = 50
+http.globalAgent.maxSockets = 10
 request     = require 'request'
 logger      = require './logger'
 mysql       = require('./db').mysql
@@ -55,7 +55,7 @@ verify_proxies = (response, query) ->
                 {
                   uri: url,
                   proxy: "http://#{ip}:#{port}",
-                  timeout: 18000, #默认超时时间设置为18秒 
+                  timeout: 30000, #默认超时时间设置为30秒 
                   headers: {"User-Agent": "Safari 10.2"},
                   jar: j
                 },(error, res, body) ->
@@ -120,7 +120,7 @@ test_proxy = (response, query) ->
         {
           uri: url,
           proxy: "http://#{ip}:#{port}",
-          timeout: 18000, #默认超时时间设置为18秒 
+          timeout: 30000, #默认超时时间设置为30秒 
           headers: {"User-Agent": "Safari 10.2"},
           jar: j
         },(error, res, body) ->
