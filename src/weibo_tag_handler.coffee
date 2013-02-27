@@ -65,10 +65,7 @@ fetch_tags_weibo_score = (response, query) ->
 
 update_all_tags_weibo_score = ->
   console.log "[tags:weibo:ranks] all tags' weibo rank updated" 
-  hot_tags_count = env.WEIBO_HOT_TAGS_COUNT
-  update_tags_score_sql = "update tags as a inner join 
-                               (select l.id, @curRow := @curRow -1  as row_number from tags l join (select @curRow := #{hot_tags_count + 1}) r order by l.weibo_rank desc limit #{hot_tags_count}) as b
-                               on a.id = b.id set a.weibo_score = b.row_number"
+  update_tags_score_sql = "call prcd_update_tags_weibo_score();"
   mysql.query update_tags_score_sql, null, (err, results) ->
     if err
       console.log "[mysql error] update tags weibo score failed for #{err}"
@@ -120,8 +117,8 @@ single_tag_weibo_rank = (response, query) ->
                                         mysql.query update_sql, [score, decodeURI(tag)], (err, results) ->
                                           if err
                                             consloe.log "[mysql error] update weibo rank failed for #{err}"
-                                          response.end()
                                           window.close()
+                                          response.end()
                                       else
                                         logger.info "tag #{tag} total_num_not_found"
                                         window.close()
@@ -129,6 +126,10 @@ single_tag_weibo_rank = (response, query) ->
   )  
 
 calc_top_hundred_score = (response, query) ->
+  update_all_tags_weibo_score()
+  response.write("all tags weibo score will be updated")
+  response.end()
 
 exports.single_tag_weibo_rank = single_tag_weibo_rank
 exports.fetch_tags_weibo_score = fetch_tags_weibo_score
+exports.calc_top_hundred_weibo_score = calc_top_hundred_score

@@ -22,7 +22,6 @@ verify_proxies = (response, query) ->
       [step, completed_count, proxy_count_per_request] = [0, 0, 1]
       if total_count > 0
         loop
-          console.log " loop ... loop ..."
           get_proxy_sql = "select id, ip, country, port from http_proxies limit #{proxy_count_per_request} offset #{step * proxy_count_per_request}"
           mysql.query get_proxy_sql, null, (error, rs) ->
             if error 
