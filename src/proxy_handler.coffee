@@ -54,7 +54,7 @@ verify_proxies = (response, query) ->
                 {
                   uri: url,
                   proxy: "http://#{ip}:#{port}",
-                  timeout: 30000, #默认超时时间设置为30秒 
+                  timeout: 30000000, #默认超时时间设置为30000秒 
                   headers: {"User-Agent": "Safari 10.2"},
                   jar: j
                 },(error, res, body) ->
@@ -119,7 +119,7 @@ test_proxy = (response, query) ->
         {
           uri: url,
           proxy: "http://#{ip}:#{port}",
-          timeout: 30000, #默认超时时间设置为30秒 
+          timeout: 30000000, #默认超时时间设置为30000秒 
           headers: {"User-Agent": "Safari 10.2"},
           jar: j
         },(error, res, body) ->

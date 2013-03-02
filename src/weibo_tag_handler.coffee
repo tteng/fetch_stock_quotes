@@ -50,7 +50,7 @@ fetch_tags_weibo_score = (response, query) ->
                       request.get(
                         {
                           uri: "http://localhost:8888/single_tag_weibo_rank?tag=#{tag_results[0].name}&proxy=#{proxy_ip}&port=#{proxy_port}",
-                          timeout: 30000
+                          timeout: 30000000
                         }, (error, res, body) ->
                              completed_count++
                              logger.info "[completed_count]: #{completed_count}"
@@ -97,7 +97,7 @@ single_tag_weibo_rank = (response, query) ->
     { 
       uri: dest_url,
       proxy: "http://#{query_option.proxy}:#{query_option.port}"
-      timeout: 30000, #默认超时时间设置为30秒 
+      timeout: 30000000, #默认超时时间设置为30000秒 
       headers: {"User-Agent": "Safari 10.2"},
     },(error, res, body) ->
         if error 

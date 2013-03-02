@@ -90,7 +90,7 @@ single_tag_cn21_rank = (response, query) ->
     { 
       uri: dest_url,
       #proxy: "http://#{query_option.proxy}:#{query_option.port}"
-      timeout: 30000000, #默认超时时间设置为30秒 
+      timeout: 30000000, #默认超时时间设置为30000秒 
       headers: {"User-Agent": "Safari 10.2"},
       form: {"query": decodeURI(tag)}
     },(error, res, body) ->
