@@ -36,13 +36,13 @@ tracking = (response, query) ->
       console.log "url_key: #{url_key}"
 
       redis.zincrby url_key, 1, path, (err, response) ->
-        console.log "[redis error]: #{err}"
+        console.log "[redis error]: #{err}" if err
 
       if user_id
         user_key = "#{env.redisNamespace}:u#{user_id}:#{today}"
         console.log "user_key: #{user_key}"
         redis.zincrby user_key, 1, path, (err, response) ->
-          console.log "[redis error]: #{err}"
+          console.log "[redis error]: #{err}" if err
 
   response.end()
 
