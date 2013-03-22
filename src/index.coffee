@@ -5,6 +5,7 @@ weibo_tag_handler   =  require './weibo_tag_handler'
 google_tag_handler  =  require './google_tag_handler'
 cn21_tag_handler    =  require './cn21_tag_handler'
 proxy_handler       =  require './proxy_handler'
+tracking_handler    =  require './tracking_handler'
 
 handle                                      =     { }
 
@@ -32,6 +33,9 @@ handle["/calc_top_hundred_cn21_score"]      =     cn21_tag_handler.calc_top_hund
 # proxies                                   
 handle["/verify_proxies"]                   =     proxy_handler.verify_proxies
 handle["/test_proxy"]                       =     proxy_handler.test_proxy
+
+# tracking
+handle["/tracking"]                         =     tracking_handler.tracking
 
 server.start(router.route, handle)
 
