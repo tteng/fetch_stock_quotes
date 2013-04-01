@@ -16,7 +16,7 @@ pool = Pool
       user: env.MYSQL_USERNAME
       password: env.MYSQL_PASSWORD
       database: env.MYSQL_DATABASE
-      insecureAuth: true if env.MYSQL_INSECUREAUTH
+      #insecureAuth: true if env.MYSQL_INSECUREAUTH
       # debug: env.DEBUG
     c.connect (error) ->
       if not error

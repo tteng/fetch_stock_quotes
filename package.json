@@ -10,8 +10,8 @@
     "generic-pool":   ">=2.0.2",
     "memcached":      ">=0.1.5",
     "date-utils":     "1.2.12",
-    "jsdom":          "0.3.4",
     "redis":          "0.8.2",
+    "jsdom":          "0.5.4",
     "hiredis":        "0.1.15"
   },
   "devDependencies" : {
