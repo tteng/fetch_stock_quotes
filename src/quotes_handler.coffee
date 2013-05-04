@@ -21,30 +21,27 @@ start = (response, query) ->
 fetch_single_quote = (response, query) ->
   query = query.split('=')[1]
   console.log "Request handler quotes was called, will get quotes for #{query}"
-  fields = [
-    'symbol'                          ,
-    'name'                            , 
-    'market_capitalization'           , 
-    'last_trade_price_only'           , 
-    'change_with_percent_change'      , 
-    'previous_close'                  , 
-    'day_range'                       , 
-    'fifty_two_week_range'            , 
-    'average_daily_volume'            , 
-    'short_ratio'                     , 
-    'p_e_ratio'                       , 
-    'price_eps_estimate_current_year' , 
-    'price_eps_estimate_next_year'    , 
-    'peg_ratio'                       , 
-    'one_yr_target_price'             , 
-    'dividend_per_share'              , 
-    'book_value'                      , 
-    'created_at'                      , 
-    'updated_at'
-  ]
-
-  value_holders = ("?" for i in [0...(fields.length-2)])
-  sql = "insert into stock_quotes(#{fields.join(',')}) values (#{value_holders.join(',')}, now(), now())"         
+  #fields = [
+  #  'symbol'                          ,
+  #  'name'                            , 
+  #  'market_capitalization'           , 
+  #  'last_trade_price_only'           , 
+  #  'change_with_percent_change'      , 
+  #  'previous_close'                  , 
+  #  'day_range'                       , 
+  #  'fifty_two_week_range'            , 
+  #  'average_daily_volume'            , 
+  #  'short_ratio'                     , 
+  #  'p_e_ratio'                       , 
+  #  'price_eps_estimate_current_year' , 
+  #  'price_eps_estimate_next_year'    , 
+  #  'peg_ratio'                       , 
+  #  'one_yr_target_price'             , 
+  #  'dividend_per_share'              , 
+  #  'book_value'                      , 
+  #  'created_at'                      , 
+  #  'updated_at'
+  #]
 
   request.get sprintf(options.uri, query), (error, res, body) ->
     unless body == undefined
@@ -54,17 +51,21 @@ fetch_single_quote = (response, query) ->
         return if line == ''
         response.write line
         response.write "\n"
-        values = line.split(',')
+        stock_params = []
+        ary = line.split(',')
+        for i in [0...ary.length]
+          stock_params.push "'#{ary[i]}'"
         logger.info "going to query database"
-        mysql.query sql, values, (err, results) ->
+        sql = "call prcd_update_stock_quotes(#{stock_params.join(',')})"
+        mysql.query sql, null, (err, results) ->
           if err
             console.log err 
             response.write "\n"
             response.write "insert into mysql failed for: #{err}"
           else
-            console.log "memkey: #{env.MEMCACHED_NAMESPACE}:#{values[0]}  #{values[3]}"
-            memcached.set "#{env.MEMCACHED_NAMESPACE}:#{values[0]}", values[3], env.STOCK_PRICE_EXPIRES, (error, result) ->
-                                                    console.log "[cache:error:write] set price failed #{values[0]}-#{values[3]} caused by #{error}" if error
+            console.log "memkey: #{env.MEMCACHED_NAMESPACE}:#{ary[0]}  #{ary[3]}"
+            memcached.set "#{env.MEMCACHED_NAMESPACE}:#{ary[0]}", ary[3], env.STOCK_PRICE_EXPIRES, (error, result) ->
+                                                    console.log "[cache:error:write] set price failed #{ary[0]}-#{ary[3]} caused by #{error}" if error
 
           console.log results
           response.write "\n"

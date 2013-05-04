@@ -7,6 +7,7 @@ cn21_tag_handler    =  require './cn21_tag_handler'
 proxy_handler       =  require './proxy_handler'
 dangle_handler      =  require './dangle_handler'
 tracking_handler    =  require './tracking_handler'
+soso_tag_handler    =  require './soso_tag_handler'
 
 handle                                      =     { }
 
@@ -30,7 +31,12 @@ handle["/calc_top_hundred_google_score"]    =     google_tag_handler.calc_top_hu
 handle["/tags_cn21_score"]                  =     cn21_tag_handler.fetch_tags_cn21_score
 handle["/single_tag_cn21_rank"]             =     cn21_tag_handler.single_tag_cn21_rank
 handle["/calc_top_hundred_cn21_score"]      =     cn21_tag_handler.calc_top_hundred_cn21_score
-                                            
+
+# soso tag rank
+handle["/tags_soso_score"]                  =     soso_tag_handler.fetch_tags_soso_score
+handle["/single_tag_soso_rank"]             =     soso_tag_handler.single_tag_soso_rank
+handle["/calc_top_hundred_soso_score"]      =     soso_tag_handler.calc_top_hundred_soso_score
+                                           
 # proxies                                   
 handle["/verify_proxies"]                   =     proxy_handler.verify_proxies
 handle["/test_proxy"]                       =     proxy_handler.test_proxy
