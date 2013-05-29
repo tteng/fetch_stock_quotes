@@ -21,27 +21,6 @@ start = (response, query) ->
 fetch_single_quote = (response, query) ->
   query = query.split('=')[1]
   console.log "Request handler quotes was called, will get quotes for #{query}"
-  #fields = [
-  #  'symbol'                          ,
-  #  'name'                            , 
-  #  'market_capitalization'           , 
-  #  'last_trade_price_only'           , 
-  #  'change_with_percent_change'      , 
-  #  'previous_close'                  , 
-  #  'day_range'                       , 
-  #  'fifty_two_week_range'            , 
-  #  'average_daily_volume'            , 
-  #  'short_ratio'                     , 
-  #  'p_e_ratio'                       , 
-  #  'price_eps_estimate_current_year' , 
-  #  'price_eps_estimate_next_year'    , 
-  #  'peg_ratio'                       , 
-  #  'one_yr_target_price'             , 
-  #  'dividend_per_share'              , 
-  #  'book_value'                      , 
-  #  'created_at'                      , 
-  #  'updated_at'
-  #]
 
   request.get sprintf(options.uri, query), (error, res, body) ->
     unless body == undefined

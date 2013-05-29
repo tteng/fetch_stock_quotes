@@ -88,7 +88,9 @@ realtime_propers =
     day_value_change_real_time: 'w4'
 
 query_options = 
-  uri: "http://finance.yahoo.com/d/quotes.csv?s=%s&f=snj1l1cpmwa2s7rr6r7r5t8db4"
+  #uri: "http://finance.yahoo.com/d/quotes.csv?s=%s&f=snj1l1cpmwa2s7rr6r7r5t8db4"
+  #[:symbol,:last_trade_price_only,:change,:change_in_percent]
+  uri: "http://finance.yahoo.com/d/quotes.csv?s=%s&f=sl1c1p2"
   port: 80
 
 exports.static_propers = static_propers
